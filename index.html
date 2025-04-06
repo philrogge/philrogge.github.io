@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liam wird 7!</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+    
+        .btn:hover {
+            background-color: #ff6f61; 
+            color: #fff;
+        }
+    
+
+        .invitation-image {
+            max-height: 80vh; 
+            width: auto; 
+            object-fit: contain;
+        }
+    
+        html, body {
+            overflow-y: hidden; 
+        }
+    </style>
+</head>
+<body class="bg-[#1a2a44] min-h-screen flex items-center justify-center p-4">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-4 max-w-5xl">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-6 max-w-5xl">
+            <img src="liam.png" alt="Liam wird 7!" class="invitation-image rounded-lg shadow-lg">
+        </div>
+
+        <div class="w-full md:w-1/2 flex flex-col items-start gap-4">
+            <a href="https://mywishlists.io/wishs/view/007KgV4wm4THAqdd9JEBAjB5" target="_blank" class="btn bg-[#f4c430] text-[#1a2a44] font-bold text-lg py-4 px-8 rounded-full transition-colors duration-300">
+                Wunschliste
+            </a>
+            <a href="javascript:void(0)" onclick="downloadContact()" class="btn bg-[#f4c430] text-[#1a2a44] font-bold text-lg py-4 px-8 rounded-full transition-colors duration-300">
+                Kontaktdaten Liams Papa   
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function downloadContact() {
+            const vCard = `
+BEGIN:VCARD
+VERSION:3.0
+FN:Philipp Ruge
+TEL;TYPE=CELL:0152 03608310
+END:VCARD
+            `.trim();
+
+            const blob = new Blob([vCard], { type: 'text/vcard' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'event_organizer.vcf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
