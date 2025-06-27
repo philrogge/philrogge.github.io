@@ -39,6 +39,9 @@
             <a href="javascript:void(0)" onclick="downloadContact()" class="btn bg-[#f4c430] text-[#1a2a44] font-bold text-lg py-4 px-8 rounded-full transition-colors duration-300">
                 Kontaktdaten Ollis Papa   
             </a>
+            <a href="javascript:void(0)" onclick="downloadCalendarEvent()" class="btn bg-[#f4c430] text-[#1a2a44] font-bold text-lg py-4 px-8 rounded-full transition-colors duration-300">
+    Geburtstagstermin speichern
+            </a>
         </div>
     </div>
 
@@ -63,5 +66,35 @@ END:VCARD
             window.URL.revokeObjectURL(url);
         }
     </script>
+
+    <script>
+    function downloadCalendarEvent() {
+        const icsContent = `
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//YourCompany//BirthdayEvent//EN
+BEGIN:VEVENT
+UID:${new Date().getTime()}@yourdomain.com
+DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').split('.')[0]}Z
+DTSTART:20250713T080000Z
+DTEND:20250713T120000Z
+SUMMARY:Ollis Geburtstag
+LOCATION:Jim und Jimmy, Lerchenkamp 60, 31137 Hildesheim
+DESCRIPTION:Ollis Geburtstag bei Jim und Jimmy von 10–14 Uhr.
+END:VEVENT
+END:VCALENDAR
+        `.trim();
+
+        const blob = new Blob([icsContent], { type: 'text/calendar' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'ollis_geburtstag.ics';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+</script>
 </body>
 </html>
